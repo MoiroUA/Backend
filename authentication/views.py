@@ -3,10 +3,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect
+from rest_framework.authtoken.models import Token
 
-from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer
+from .models import User
+from .serializers import RegistrationSerializer, UserSerializer
 
 
 # Create your views here.
@@ -22,27 +22,6 @@ class RegistrationAPIView(APIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class LoginAPIView(APIView):
-    permission_classes = (AllowAny,)
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        data = request.data
-
-        serializer = self.serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        user = authenticate(
-            request,
-            email=data['email'],
-            password=data['password']
-        )
-
-        login(request, user=user)
-
-        return redirect('/auth/users/')
 
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
