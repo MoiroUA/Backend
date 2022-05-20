@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-_523)6e^ddz4#a)s$e%od#ajgcdk62_mt0-%p3lbovl5_r5m7=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "True"
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = ['vision-moiro.herokuapp.com', '127.0.0.1']
 
 DEVELOPMENT_MODE = "True"
 
