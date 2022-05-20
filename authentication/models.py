@@ -44,14 +44,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=True, unique=True)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20, blank=True, unique=True)
+
+    is_subscribed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
     objects = UserManager()
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return f"{self.first_name} {self.last_name}"
 
     def get_full_name(self):
         return self.first_name + self.last_name
