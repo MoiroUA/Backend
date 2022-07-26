@@ -46,6 +46,10 @@ class ProfileRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
         return Response(serializer_data, status=status.HTTP_200_OK)
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
     def destroy(self, request, *args, **kwargs):
         user = request.user
         user.delete()
